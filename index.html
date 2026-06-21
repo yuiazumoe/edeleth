@@ -54,6 +54,7 @@ a{color:inherit;text-decoration:none;}
 .status .dot{width:6px;height:6px;border-radius:50%;display:inline-block;}
 .status .dot.on{background:#6abf8a;}
 .status .dot.off{background:var(--faint);}
+.card-link{display:flex;flex-direction:column;flex:1;cursor:pointer;}
 .card-enter{font-size:.78rem;color:var(--cr);letter-spacing:.06em;transition:letter-spacing .2s,color .6s;}
 .card[data-fx]:hover .card-enter{letter-spacing:.14em;}
 
@@ -76,25 +77,27 @@ a{color:inherit;text-decoration:none;}
 
 <main class="grid">
 
-  <a href="REwithSE.html" class="card live" data-fx="sniper">
+  <div class="card live" data-fx="sniper">
     <canvas class="fx"></canvas>
     <div class="cover-frame"><img src="cover-re.jpg" alt="ROYAL EMBLEM 封面"></div>
     <div class="seal">槍</div>
-    <div class="card-title">ROYAL EMBLEM 系列</div>
-    <div class="card-tag">現代 AU</div>
-    <div class="card-desc">
-      學生時代、戰場與婚後之間自由穿梭的七十三個瞬間。
-      收錄本篇與後日談 SHARP EDGES。
-    </div>
-    <ul class="card-books">
-      <li>ROYAL EMBLEM ── 本篇‧公主路線</li>
-      <li>SHARP EDGES ── 後日談與平行世界（連載中）</li>
-    </ul>
-    <div class="card-foot">
-      <span class="status"><span class="dot on"></span>公開中</span>
-      <span class="card-enter">開始閱讀 →</span>
-    </div>
-  </a>
+    <a href="REwithSE.html" class="card-link">
+      <div class="card-title">ROYAL EMBLEM 系列</div>
+      <div class="card-tag">現代 AU</div>
+      <div class="card-desc">
+        學生時代、戰場與婚後之間自由穿梭的七十三個瞬間。
+        收錄本篇與後日談 SHARP EDGES。
+      </div>
+      <ul class="card-books">
+        <li>ROYAL EMBLEM ── 本篇‧公主路線</li>
+        <li>SHARP EDGES ── 後日談與平行世界（連載中）</li>
+      </ul>
+      <div class="card-foot">
+        <span class="status"><span class="dot on"></span>公開中</span>
+        <span class="card-enter">開始閱讀 →</span>
+      </div>
+    </a>
+  </div>
 
   <div class="card soon" data-fx="fire">
     <canvas class="fx"></canvas>
