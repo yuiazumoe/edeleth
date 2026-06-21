@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>邑的小說閱讀 App</title>
+<title>艾爾貝小甜餅倉庫</title>
 <meta name="description" content="Fire Emblem 風花雪月同人小說——貝雷絲 × 艾黛爾賈特。ROYAL EMBLEM、帝國別史、Drops of Rain 系列線上閱讀。">
 <style>
 *{margin:0;padding:0;box-sizing:border-box;}
@@ -18,9 +18,9 @@ body{min-height:100vh;display:flex;flex-direction:column;background:var(--bg);tr
 a{color:inherit;text-decoration:none;}
 
 .header{text-align:center;padding:4.5rem 1.5rem 2.8rem;}
-.header .mark{font-size:1.15rem;letter-spacing:.7em;color:var(--cr);font-family:Georgia,"Noto Serif TC",serif;transition:color .6s;}
+.header .mark{font-size:1.25rem;letter-spacing:.35em;color:var(--cr);font-family:Georgia,"Times New Roman",serif;font-style:italic;transition:color .6s;}
 
-.grid{max-width:1060px;margin:0 auto;padding:0 1.2rem 3rem;display:grid;grid-template-columns:1fr;gap:1.4rem;}
+.grid{max-width:1200px;margin:0 auto;padding:0 1.2rem 3rem;display:grid;grid-template-columns:1fr;gap:1.4rem;}
 @media(min-width:700px){.grid{grid-template-columns:repeat(3,1fr);gap:1.6rem;}}
 
 .card{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:1.6rem 1.6rem 1.8rem;display:flex;flex-direction:column;position:relative;overflow:hidden;transition:border-color .4s,box-shadow .4s,transform .35s,background .5s;}
@@ -29,27 +29,24 @@ a{color:inherit;text-decoration:none;}
 
 .card.live:hover{transform:translateY(-3px);}
 .card[data-fx="sniper"]:hover{border-color:var(--crd);box-shadow:0 12px 40px rgba(232,180,135,.2),inset 0 0 60px rgba(232,180,135,.06);}
-.card[data-fx="swords"]:hover{border-color:#b08f34;box-shadow:0 12px 40px rgba(214,178,78,.2),inset 0 0 60px rgba(214,178,78,.06);}
+.card[data-fx="fire"]:hover{border-color:#b08f34;box-shadow:0 12px 40px rgba(214,178,78,.2),inset 0 0 60px rgba(214,178,78,.06);}
 .card[data-fx="steam"]:hover{border-color:#1fb6d4;box-shadow:0 12px 40px rgba(66,232,255,.15),inset 0 0 60px rgba(66,232,255,.06);}
 
 .card.soon{opacity:.62;}
 .card.soon:hover{opacity:.78;transform:translateY(-2px);}
 .card.soon .seal{opacity:.4;}
 
-.cover-frame{text-align:center;margin-bottom:1.2rem;}
-.cover-frame img{max-width:55%;height:auto;border-radius:8px;box-shadow:0 8px 28px rgba(0,0,0,.45);transition:transform .4s,box-shadow .4s;}
+.cover-frame{text-align:center;margin-bottom:1.2rem;height:220px;display:flex;align-items:center;justify-content:center;}
+.cover-frame img{max-width:55%;max-height:100%;height:auto;border-radius:8px;box-shadow:0 8px 28px rgba(0,0,0,.45);transition:transform .4s,box-shadow .4s;}
 .card:hover .cover-frame img{transform:scale(1.03);box-shadow:0 12px 40px rgba(0,0,0,.55);}
 
-.cover-frame.no-img{height:140px;display:flex;align-items:center;justify-content:center;background:linear-gradient(160deg,#0a1322 0%,#102036 50%,#0a1322 100%);border-radius:8px;box-shadow:0 8px 28px rgba(0,0,0,.45);}
-.cover-frame.no-img .placeholder{font-family:Georgia,"Noto Serif TC",serif;font-size:1.4rem;letter-spacing:.3em;color:rgba(66,232,255,.35);}
-
-.seal{font-size:2.4rem;line-height:1;margin-bottom:1rem;opacity:.7;font-family:Georgia,"Noto Serif TC",serif;transition:color .6s;}
+.seal{font-size:2.4rem;height:3.2rem;display:flex;align-items:flex-end;margin-bottom:1rem;opacity:.7;font-family:Georgia,"Noto Serif TC",serif;transition:color .6s;}
 .card[data-fx="sniper"] .seal{color:var(--cr);}
-.card[data-fx="swords"] .seal{color:#d6b24e;}
+.card[data-fx="fire"] .seal{color:#d6b24e;}
 .card[data-fx="steam"] .seal{color:#42e8ff;}
 
-.card-title{font-family:Georgia,"Times New Roman",serif;font-size:1.1rem;letter-spacing:.12em;font-weight:400;margin-bottom:.3rem;transition:color .6s;}
-.card-tag{font-size:.7rem;color:var(--dim);letter-spacing:.06em;margin-bottom:.8rem;transition:color .6s;}
+.card-title{font-family:Georgia,"Times New Roman",serif;font-size:1.1rem;letter-spacing:.12em;font-weight:400;min-height:1.8rem;margin-bottom:.3rem;transition:color .6s;}
+.card-tag{font-size:.7rem;color:var(--dim);letter-spacing:.06em;min-height:1.2rem;margin-bottom:.8rem;transition:color .6s;}
 .card-desc{font-size:.82rem;color:var(--dim);line-height:1.8;flex:1;transition:color .6s;}
 
 .card-foot{margin-top:1.2rem;display:flex;align-items:center;justify-content:space-between;}
@@ -64,8 +61,8 @@ a{color:inherit;text-decoration:none;}
 .card-books li{list-style:none;font-size:.72rem;color:var(--dim);padding:.12rem 0;display:flex;align-items:baseline;gap:.4rem;transition:color .6s;}
 .card-books li::before{content:"";display:inline-block;width:3px;height:3px;border-radius:50%;background:var(--faint);flex-shrink:0;position:relative;top:-.15em;}
 
-.footer{margin-top:auto;text-align:center;padding:2rem 1.5rem 2.5rem;font-size:.72rem;color:var(--faint);line-height:2;transition:color .6s;}
-.footer a{color:var(--dim);border-bottom:1px dashed var(--faint);transition:color .2s,border-color .2s;}
+.footer{margin-top:auto;text-align:center;padding:2rem 1.5rem 2.5rem;font-size:.72rem;color:rgba(255,255,255,.7);line-height:2;transition:color .6s;}
+.footer a{color:rgba(255,255,255,.85);border-bottom:1px dashed rgba(255,255,255,.4);transition:color .2s,border-color .2s;}
 .footer a:hover{color:var(--cr);border-color:var(--cr);}
 
 .badge{display:inline-block;font-size:.62rem;letter-spacing:.08em;padding:.15rem .55rem;border:1px solid var(--faint);border-radius:4px;color:var(--dim);transition:border-color .6s,color .6s;}
@@ -74,7 +71,7 @@ a{color:inherit;text-decoration:none;}
 <body>
 
 <header class="header">
-  <div class="mark">貝 雷 絲 × 艾 黛 爾 賈 特</div>
+  <div class="mark">Byleth × Edelgard</div>
 </header>
 
 <main class="grid">
@@ -99,7 +96,7 @@ a{color:inherit;text-decoration:none;}
     </div>
   </a>
 
-  <div class="card soon" data-fx="swords">
+  <div class="card soon" data-fx="fire">
     <canvas class="fx"></canvas>
     <div class="cover-frame"><img src="cover-cae.jpg" alt="帝國別史 封面"></div>
     <div class="seal">劍</div>
@@ -122,10 +119,10 @@ a{color:inherit;text-decoration:none;}
 
   <div class="card soon" data-fx="steam">
     <canvas class="fx"></canvas>
-    <div class="cover-frame no-img"><span class="placeholder">Drops of Rain</span></div>
+    <div class="cover-frame"><img src="cover-dr.jpg" alt="Drops of Rain 封面"></div>
     <div class="seal">雨</div>
     <div class="card-title">Drops of Rain</div>
-    <div class="card-tag">平行世界</div>
+    <div class="card-tag">異想短篇集</div>
     <div class="card-desc">
       六十二滴雨，六十二個她們相遇的世界。咖啡店、雪山、戰場、太空站，與世界毀滅的前一秒。
     </div>
@@ -151,9 +148,9 @@ a{color:inherit;text-decoration:none;}
 (function(){
   var body = document.body;
   var themes = {
-    sniper:  {bg:'#161a2e',cr:'#e8b487'},
-    swords: {bg:'#100c0d',cr:'#d6b24e'},
-    steam:  {bg:'#04070e',cr:'#42e8ff'}
+    sniper: {bg:'#1a2844'},
+    fire:   {bg:'#2c1015'},
+    steam:  {bg:'#0a2028'}
   };
 
   var cards = document.querySelectorAll('.card[data-fx]');
@@ -165,7 +162,6 @@ a{color:inherit;text-decoration:none;}
     var fx = card.dataset.fx;
     var w, h;
     var sniperT = 0;
-    var swordT = 0;
 
     function resize(){
       var r = card.getBoundingClientRect();
@@ -176,15 +172,63 @@ a{color:inherit;text-decoration:none;}
     }
 
     function spawn(){
-      if(fx === 'steam'){
+      if(fx === 'sniper'){
         for(var i = 0; i < 2; i++){
-          var cx = w * (.2 + Math.random() * .6);
+          var angle = Math.random() * Math.PI * 2;
+          var speed = 1 + Math.random() * 2.5;
           particles.push({
-            x: cx, y: h - 10,
-            vx: (Math.random() - .5) * .3,
-            vy: -(0.4 + Math.random() * 0.8),
+            type:'bullet',
+            x: w * (.2 + Math.random() * .6),
+            y: h * (.2 + Math.random() * .6),
+            vx: Math.cos(angle) * speed,
+            vy: Math.sin(angle) * speed,
+            r: 1 + Math.random() * 1.5,
             life: 1,
-            decay: .006 + Math.random() * .006,
+            decay: .012 + Math.random() * .01
+          });
+        }
+      } else if(fx === 'fire'){
+        for(var i = 0; i < 2; i++){
+          var isFlame = Math.random() > .15;
+          if(isFlame){
+            particles.push({
+              type:'flame',
+              x: w * (.1 + Math.random() * .8),
+              y: h + 2,
+              vx: (Math.random() - .5) * .6,
+              vy: -(1 + Math.random() * 1.8),
+              r: 1.5 + Math.random() * 2,
+              life: 1,
+              decay: .01 + Math.random() * .008,
+              color: Math.random() > .4 ? 'rgba(210,100,50,' : 'rgba(240,160,60,'
+            });
+          } else {
+            particles.push({
+              type:'slash',
+              x: w * (.15 + Math.random() * .7),
+              y: h * (.2 + Math.random() * .6),
+              vx: (Math.random() - .5) * 3,
+              vy: (Math.random() - .5) * 3,
+              r: 1.2,
+              life: 1,
+              decay: .02 + Math.random() * .015,
+              len: 16 + Math.random() * 24,
+              angle: -.7 + Math.random() * 1.4
+            });
+          }
+        }
+      } else if(fx === 'steam'){
+        for(var i = 0; i < 3; i++){
+          particles.push({
+            type: Math.random() > .4 ? 'rain' : 'steam',
+            x: Math.random() * w,
+            y: Math.random() > .4 ? -2 : h - 10,
+            vx: Math.random() > .4 ? (.2 + Math.random() * .3) : (Math.random() - .5) * .3,
+            vy: Math.random() > .4 ? (2 + Math.random() * 2.5) : -(0.4 + Math.random() * 0.8),
+            r: .6 + Math.random() * .4,
+            life: 1,
+            decay: Math.random() > .4 ? 0 : (.006 + Math.random() * .006),
+            len: 6 + Math.random() * 10,
             amp: 8 + Math.random() * 12,
             freq: .02 + Math.random() * .02,
             phase: Math.random() * Math.PI * 2,
@@ -197,23 +241,21 @@ a{color:inherit;text-decoration:none;}
     function draw(){
       ctx.clearRect(0, 0, w, h);
 
+      /* === RE: sniper scope === */
       if(fx === 'sniper' && card._hovering){
         sniperT += .025;
         var cx = w / 2, cy = h / 2;
-        var radius = Math.min(w, h) * .28;
+        var radius = Math.min(w, h) * .22;
         var appear = Math.min(1, sniperT * 2);
-        var a = .35 * appear;
-
+        var a = .3 * appear;
         ctx.strokeStyle = 'rgba(232,180,135,' + a + ')';
         ctx.lineWidth = 1.5;
         ctx.beginPath();
         ctx.arc(cx, cy, radius * appear, 0, Math.PI * 2);
         ctx.stroke();
-
         ctx.beginPath();
         ctx.arc(cx, cy, radius * .15 * appear, 0, Math.PI * 2);
         ctx.stroke();
-
         var len = radius * 1.3 * appear;
         ctx.lineWidth = 1;
         ctx.beginPath();
@@ -222,7 +264,6 @@ a{color:inherit;text-decoration:none;}
         ctx.moveTo(cx, cy - len); ctx.lineTo(cx, cy - radius * .2);
         ctx.moveTo(cx, cy + radius * .2); ctx.lineTo(cx, cy + len);
         ctx.stroke();
-
         for(var t = 0; t < 12; t++){
           var ang = (t / 12) * Math.PI * 2 + sniperT * .5;
           var tx = cx + Math.cos(ang) * radius * .85;
@@ -234,61 +275,51 @@ a{color:inherit;text-decoration:none;}
         }
       }
 
-      if(fx === 'swords' && card._hovering){
-        swordT += .03;
-        var appear = Math.min(1, swordT * 1.5);
-        var cx = w / 2, cy = h / 2;
-        var slen = Math.min(w, h) * .4 * appear;
+      /* === particles === */
+      for(var i = particles.length - 1; i >= 0; i--){
+        var p = particles[i];
+        p.x += p.vx;
+        p.y += p.vy;
+        p.life -= p.decay;
 
-        ctx.lineWidth = 2;
-        ctx.lineCap = 'round';
+        if(p.type === 'rain' && p.y > h) p.life = 0;
+        if(p.life <= 0){ particles.splice(i, 1); continue; }
 
-        ctx.strokeStyle = 'rgba(214,178,78,' + (.4 * appear) + ')';
-        ctx.beginPath();
-        ctx.moveTo(cx - slen, cy - slen * .8);
-        ctx.lineTo(cx + slen, cy + slen * .8);
-        ctx.stroke();
+        var pa = p.life * .6;
 
-        ctx.strokeStyle = 'rgba(230,198,106,' + (.4 * appear) + ')';
-        ctx.beginPath();
-        ctx.moveTo(cx + slen, cy - slen * .8);
-        ctx.lineTo(cx - slen, cy + slen * .8);
-        ctx.stroke();
-
-        if(appear >= .8){
-          var ga = .3 * (1 + Math.sin(swordT * 3)) / 2;
-          var grad = ctx.createRadialGradient(cx, cy, 0, cx, cy, slen * .5);
-          grad.addColorStop(0, 'rgba(214,178,78,' + ga + ')');
-          grad.addColorStop(1, 'rgba(214,178,78,0)');
-          ctx.fillStyle = grad;
-          ctx.fillRect(0, 0, w, h);
-        }
-
-        ctx.lineWidth = .5;
-        ctx.strokeStyle = 'rgba(214,178,78,' + (.15 * appear) + ')';
-        ctx.beginPath();
-        ctx.moveTo(cx - slen * .15, cy - slen * .06);
-        ctx.lineTo(cx + slen * .15, cy - slen * .06);
-        ctx.moveTo(cx - slen * .15, cy + slen * .06);
-        ctx.lineTo(cx + slen * .15, cy + slen * .06);
-        ctx.stroke();
-      }
-
-      if(fx === 'steam'){
-        for(var i = particles.length - 1; i >= 0; i--){
-          var p = particles[i];
-          p.y += p.vy;
-          p.x += p.vx + Math.sin(p.phase + p.y * p.freq) * .5;
-          p.life -= p.decay;
-          if(p.life <= 0){ particles.splice(i, 1); continue; }
-
-          var a = p.life * .25;
-          var r = p.size * (1 - p.life * .3);
-          var grad = ctx.createRadialGradient(p.x, p.y, 0, p.x, p.y, r);
-          grad.addColorStop(0, 'rgba(66,232,255,' + a + ')');
+        if(p.type === 'bullet'){
+          ctx.fillStyle = 'rgba(232,180,135,' + pa + ')';
+          ctx.beginPath();
+          ctx.arc(p.x, p.y, p.r * p.life, 0, Math.PI * 2);
+          ctx.fill();
+        } else if(p.type === 'flame'){
+          ctx.fillStyle = p.color + pa + ')';
+          ctx.beginPath();
+          ctx.arc(p.x, p.y, p.r * p.life, 0, Math.PI * 2);
+          ctx.fill();
+        } else if(p.type === 'slash'){
+          ctx.strokeStyle = 'rgba(255,255,240,' + pa + ')';
+          ctx.lineWidth = p.r;
+          ctx.beginPath();
+          ctx.moveTo(p.x, p.y);
+          ctx.lineTo(p.x + Math.cos(p.angle) * p.len * p.life, p.y + Math.sin(p.angle) * p.len * p.life);
+          ctx.stroke();
+        } else if(p.type === 'rain'){
+          ctx.strokeStyle = 'rgba(130,180,220,' + (.3 + p.life * .3) + ')';
+          ctx.lineWidth = p.r;
+          ctx.beginPath();
+          ctx.moveTo(p.x, p.y);
+          ctx.lineTo(p.x - p.vx * .6, p.y - p.len);
+          ctx.stroke();
+        } else if(p.type === 'steam'){
+          var sr = p.size * (1 - p.life * .3);
+          p.x += Math.sin(p.phase + p.y * p.freq) * .5;
+          var sa = p.life * .2;
+          var grad = ctx.createRadialGradient(p.x, p.y, 0, p.x, p.y, sr);
+          grad.addColorStop(0, 'rgba(66,232,255,' + sa + ')');
           grad.addColorStop(1, 'rgba(66,232,255,0)');
           ctx.fillStyle = grad;
-          ctx.fillRect(p.x - r, p.y - r, r * 2, r * 2);
+          ctx.fillRect(p.x - sr, p.y - sr, sr * 2, sr * 2);
         }
       }
 
@@ -305,7 +336,7 @@ a{color:inherit;text-decoration:none;}
         if(!raf){ resize(); raf = requestAnimationFrame(draw); }
       }
       if(card._hovering || particles.length > 0){
-        setTimeout(tick, 60);
+        setTimeout(tick, 50);
       } else {
         card._ticking = false;
       }
@@ -314,10 +345,8 @@ a{color:inherit;text-decoration:none;}
     card.addEventListener('mouseenter', function(){
       card._hovering = true;
       sniperT = 0;
-      swordT = 0;
       resize();
       if(!card._ticking){ card._ticking = true; tick(); }
-
       var t = themes[fx];
       if(t) body.style.backgroundColor = t.bg;
     });
