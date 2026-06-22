@@ -661,5 +661,6 @@ var qrcode=function(){var t=function(t,r){var e=t,n=g[r],o=null,i=0,a=null,u=[],
 
 
 
+<script>/*IOS_VOL_FIX*/(function(){var isIOS=/iPad|iPhone|iPod/.test(navigator.userAgent)||("MacIntel"===navigator.platform&&navigator.maxTouchPoints>1);if(!isIOS)return;function fix(){var wrap=document.querySelector(".bgm-vol-wrap");if(!wrap)return false;if(wrap.getAttribute("data-iosvol"))return true;wrap.setAttribute("data-iosvol","1");[].forEach.call(wrap.querySelectorAll(".bgm-vol-btn,.bgm-vol-bar,.bgm-vol-pct"),function(el){el.style.display="none";});var h=document.createElement("span");h.textContent="音量請用手機音量鍵調整";h.style.cssText="font-size:11px;color:#8078a0;flex:1;line-height:1.3;";wrap.appendChild(h);return true;}if(!fix()){var t=setInterval(function(){if(fix())clearInterval(t);},200);setTimeout(function(){clearInterval(t);},6000);}})();</script>
 </body>
 </html>
