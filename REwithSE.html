@@ -503,9 +503,13 @@ var qrcode=function(){var t=function(t,r){var e=t,n=g[r],o=null,i=0,a=null,u=[],
   };
   function say(txt,dur){
     if(!txt)return;dur=dur||1800;var r=rect();
-    var b=document.createElement("div");b.className="bd-say";b.textContent=txt;document.body.appendChild(b);
+    var m=menu(),ms=m&&m.classList.contains("show"),mr=ms?m.getBoundingClientRect():null,menuRight=ms&&mr.left>=r.left;
+    var b=document.createElement("div");b.className="bd-say";b.textContent=txt;
+    if(ms){b.style.maxWidth=Math.max(80,(menuRight?mr.left-12:window.innerWidth-mr.right-12))+"px";}
+    document.body.appendChild(b);
     var bw=b.offsetWidth,bh=b.offsetHeight;
-    b.style.left=clamp(r.left+r.width/2-bw/2,6,window.innerWidth-bw-6)+"px";
+    if(ms){b.style.left=(menuRight?clamp(r.left,6,Math.max(6,mr.left-bw-6)):clamp(r.left,mr.right+6,window.innerWidth-bw-6))+"px";}
+    else{b.style.left=clamp(r.left+r.width/2-bw/2,6,window.innerWidth-bw-6)+"px";}
     b.style.top=Math.max(6,r.top-bh-8)+"px";
     b.animate([{opacity:0,transform:"translateY(6px)"},{opacity:1,transform:"translateY(0)",offset:.12},{opacity:1,offset:.85},{opacity:0,transform:"translateY(-4px)"}],{duration:dur,easing:"ease-out"});
     setTimeout(function(){b.remove();},dur+60);
@@ -513,19 +517,21 @@ var qrcode=function(){var t=function(t,r){var e=t,n=g[r],o=null,i=0,a=null,u=[],
   var dragging=false,moved=false,sx=0,sy=0,ox=0,oy=0;
   function onDown(e){var box=el();dragging=true;moved=false;sx=e.clientX;sy=e.clientY;var r=box.getBoundingClientRect();ox=r.left;oy=r.top;box.classList.add("dragging");hideMenu();if(box.setPointerCapture&&e.pointerId!=null){try{box.setPointerCapture(e.pointerId);}catch(_){}}}
   function onMove(e){if(!dragging)return;var dx=e.clientX-sx,dy=e.clientY-sy;if(Math.abs(dx)+Math.abs(dy)>5)moved=true;if(!moved)return;var box=el(),w=box.offsetWidth,h=box.offsetHeight;box.style.left=clamp(ox+dx,2,window.innerWidth-w-2)+"px";box.style.top=clamp(oy+dy,2,window.innerHeight-h-2)+"px";box.style.bottom="auto";e.preventDefault();}
-  function onUp(){if(!dragging)return;dragging=false;var box=el();box.classList.remove("dragging");if(moved){var r=box.getBoundingClientRect();localStorage.setItem(PKEY,JSON.stringify({l:Math.round(r.left),t:Math.round(r.top)}));}else{petBuddy();toggleMenu();}}
+  function onUp(){if(!dragging)return;dragging=false;var box=el();box.classList.remove("dragging");if(moved){var r=box.getBoundingClientRect();localStorage.setItem(PKEY,JSON.stringify({l:Math.round(r.left),t:Math.round(r.top)}));}else{toggleMenu();petBuddy();}}
   var PET_EMO=["❤️","✨","💕","💫","🎵","🌟"];
   function petBuddy(){
     var dr=document.getElementById("bdDragon");if(dr.classList.contains("_p"))return;dr.classList.add("_p");
     if(isEgg()){dr.animate([{transform:"rotate(0)"},{transform:"rotate(360deg)"}],{duration:680,easing:"ease-in-out"});setTimeout(function(){dr.classList.remove("_p");},690);}
     else{dr.animate([{transform:"scale(1)"},{transform:"scale(1.13) rotate(-4deg)",offset:.3},{transform:"scale(1.06) rotate(4deg)",offset:.6},{transform:"scale(1)"}],{duration:460,easing:"ease-out"});setTimeout(function(){dr.classList.remove("_p");},470);}
     var r=rect();var emo=PET_EMO[Math.floor(Math.random()*PET_EMO.length)];
-    var e=document.createElement("div");e.className="bd-fx";e.textContent=emo;e.style.fontSize="20px";e.style.left=(r.left+r.width-8)+"px";e.style.top=(r.top+2)+"px";document.body.appendChild(e);
-    e.animate([{transform:"translateY(0) scale(.4)",opacity:0},{transform:"translate(6px,-10px) scale(1.1)",opacity:1,offset:.3},{transform:"translate(11px,-32px) scale(.9)",opacity:0}],{duration:880,easing:"ease-out"});
+    var m=menu(),ms=m&&m.classList.contains("show"),mLeft=ms&&m.getBoundingClientRect().left<r.left;
+    var ex=ms?(mLeft?(r.right-24):(r.left+4)):(r.left+r.width-8),dxs=ms?(mLeft?12:-12):8;
+    var e=document.createElement("div");e.className="bd-fx";e.textContent=emo;e.style.fontSize="20px";e.style.left=ex+"px";e.style.top=(r.top+2)+"px";document.body.appendChild(e);
+    e.animate([{transform:"translateY(0) scale(.4)",opacity:0},{transform:"translate("+(dxs*0.5)+"px,-10px) scale(1.1)",opacity:1,offset:.3},{transform:"translate("+dxs+"px,-32px) scale(.9)",opacity:0}],{duration:880,easing:"ease-out"});
     setTimeout(function(){e.remove();},900);
     var cry=window.buddyPoke?window.buddyPoke():"";if(cry)say(cry,1500);
   }
-  function toggleMenu(){var m=menu();if(!m)return;if(m.classList.contains("show")){m.classList.remove("show");return;}var box=el(),r=box.getBoundingClientRect();m.classList.add("show");var mh=m.offsetHeight||170,mw=m.offsetWidth||140;var top=r.top-mh-8;if(top<6)top=r.bottom+8;m.style.left=clamp(r.left,4,window.innerWidth-mw-4)+"px";m.style.top=clamp(top,4,window.innerHeight-mh-4)+"px";m.style.bottom="auto";}
+  function toggleMenu(){var m=menu();if(!m)return;if(m.classList.contains("show")){m.classList.remove("show");return;}var box=el(),r=box.getBoundingClientRect();m.classList.add("show");var mh=m.offsetHeight||170,mw=m.offsetWidth||150;var left=r.right+8;if(left+mw>window.innerWidth-4)left=r.left-mw-8;left=clamp(left,4,window.innerWidth-mw-4);var top=clamp(r.bottom-mh,4,window.innerHeight-mh-4);m.style.left=left+"px";m.style.top=top+"px";m.style.bottom="auto";}
   document.addEventListener("click",function(e){if(!(e.target.closest&&(e.target.closest("#bdMenu")||e.target.closest("#bookBuddy"))))hideMenu();});
   window.bdDismiss=function(){hideMenu();localStorage.removeItem(KEY);window.renderBuddy();};
   function notes(r,n){n=n||3;for(var i=0;i<n;i++){(function(i){var d=document.createElement("div");d.className="bd-note";d.textContent=["♪","♫","♩","♬"][i%4];d.style.left=(r.left+r.width/2+(i-1)*15)+"px";d.style.top=(r.top+6)+"px";d.style.fontSize=(13+(i%3))+"px";document.body.appendChild(d);d.animate([{transform:"translateY(2px) scale(.5)",opacity:0},{transform:"translateY(-8px) scale(1)",opacity:1,offset:.3},{transform:"translateY(-36px) scale(.9)",opacity:0}],{duration:1150,delay:i*120,easing:"ease-out"});setTimeout(function(){d.remove();},1200+i*120);})(i);}}
@@ -637,6 +643,8 @@ var qrcode=function(){var t=function(t,r){var e=t,n=g[r],o=null,i=0,a=null,u=[],
   if(document.readyState!=="loading")setTimeout(boot,60);else document.addEventListener("DOMContentLoaded",boot);
 })();
 </script>
+
+
 
 
 
