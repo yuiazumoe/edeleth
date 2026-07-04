@@ -1,0 +1,37 @@
+{
+  "baseUrl": "http://edeleth.com/CoA_BGM/",
+  "tracks": [
+    {
+      "file": "CoA_C01. Flame Dance.mp3",
+      "name": "白雲01.星火初燃 Flame Dance"
+    },
+    {
+      "file": "CoA_C02. Starlit Strings.mp3",
+      "name": "白雲02.夜幕弦音 Starlit Strings"
+    },
+    {
+      "file": "CoA_C03. Eagle Triumphant.mp3",
+      "name": "白雲03.鷲羽凱旋 Eagle Triumphant"
+    },
+    {
+      "file": "CoA_F04. Lonely Crown.mp3",
+      "name": "紅花04.孤冕之影 Lonely Crown"
+    },
+    {
+      "file": "CoA_F05. Dawn Overture.mp3",
+      "name": "紅花05.破曉序曲 Dawn Overture"
+    },
+    {
+      "file": "CoA_F06. Twin Lights Before Dawn.mp3",
+      "name": "紅花06.夙夜未央 Twin Lights Before Dawn"
+    },
+    {
+      "file": "CoA_F07. Whispered Heartstrings.mp3",
+      "name": "紅花07.心弦密語 Whispered Heartstrings"
+    },
+    {
+      "file": "CoA_F08. Eternal Symphony.mp3",
+      "name": "紅花08.永世迴響 Eternal Symphony"
+    }
+  ]
+}
