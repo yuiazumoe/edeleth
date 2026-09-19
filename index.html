@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <link rel="icon" type="image/png" href="favicon.png">
 <title>艾爾貝小甜餅倉庫</title>
-<meta name="description" content="Fire Emblem 風花雪月同人小說——貝雷絲 × 艾黛爾賈特。ROYAL EMBLEM、帝國別史、Drops of Rain 系列線上閱讀。">
+<meta name="description" content="Fire Emblem 風花雪月同人小說——貝雷絲 × 艾黛爾賈特。ROYAL EMBLEM、帝國別史、Drops of Rain、界線之內 Within the Lines 系列線上閱讀。">
 <style>
 *{margin:0;padding:0;box-sizing:border-box;}
 :root{
@@ -21,8 +21,9 @@ a{color:inherit;text-decoration:none;}
 .header{text-align:center;padding:4.5rem 1.5rem 2.8rem;position:relative;z-index:2;}
 .header .mark{font-size:1.25rem;letter-spacing:.35em;color:var(--cr);font-family:Georgia,"Times New Roman",serif;font-style:italic;transition:color .6s;}
 
-.grid{max-width:1200px;margin:0 auto;padding:0 1.2rem 3rem;display:grid;grid-template-columns:1fr;gap:1.4rem;position:relative;z-index:2;}
-@media(min-width:700px){.grid{grid-template-columns:repeat(3,1fr);gap:1.6rem;}}
+.grid{width:100%;max-width:1440px;margin:0 auto;padding:0 1.2rem 3rem;display:grid;grid-template-columns:minmax(0,1fr);gap:1.4rem;position:relative;z-index:2;}
+@media(min-width:700px){.grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:1.6rem;}}
+@media(min-width:1120px){.grid{grid-template-columns:repeat(4,minmax(0,1fr));}}
 
 .card{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:1.6rem 1.6rem 1.8rem;display:flex;flex-direction:column;position:relative;overflow:hidden;transition:border-color .4s,box-shadow .4s,transform .35s,background .5s;}
 .card canvas.fx{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:2;}
@@ -56,7 +57,7 @@ a{color:inherit;text-decoration:none;}
 .status .dot.on{background:#6abf8a;}
 .status .dot.off{background:var(--faint);}
 .card-link{display:flex;flex-direction:column;flex:1;cursor:pointer;}
-.card-enter{font-size:.78rem;color:var(--cr);letter-spacing:.06em;transition:letter-spacing .2s,color .6s;}
+.card-enter{font-size:.78rem;color:var(--victory-gold,#e8c57c);letter-spacing:.06em;transition:letter-spacing .2s,color .6s;}
 .card[data-fx]:hover .card-enter{letter-spacing:.14em;}
 
 .card-books{margin-top:.6rem;padding-top:.6rem;border-top:1px solid var(--line);transition:border-color .6s;}
@@ -69,8 +70,153 @@ a{color:inherit;text-decoration:none;}
 
 .badge{display:inline-block;font-size:.62rem;letter-spacing:.08em;padding:.15rem .55rem;border:1px solid var(--faint);border-radius:4px;color:var(--dim);transition:border-color .6s,color .6s;}
 #bg-fx{position:fixed;inset:0;width:100%;height:100%;pointer-events:none;z-index:1;}
+
+/* 光：卡內保留紅、紫兩道劍光；卡外是頒獎時灑落的彩花與金光。 */
+.card[data-fx="saber"]{
+  --saber-red:#bd526f;--saber-purple:#9972c3;--victory-gold:#e8c57c;
+  border-color:#60424d;
+  background:radial-gradient(ellipse at 0 0,#883b502a,transparent 55%),radial-gradient(ellipse at 100% 20%,#624b7633,transparent 58%),var(--panel);
+}
+.card[data-fx="saber"]::before{
+  content:"";position:absolute;inset:0 12% auto;height:1px;
+  background:linear-gradient(90deg,transparent,var(--saber-red),var(--victory-gold),var(--saber-purple),transparent);
+}
+.card[data-fx="saber"].is-celebrating,.card[data-fx="saber"]:focus-within{
+  transform:translateY(-3px);border-color:#c7a363;
+  box-shadow:0 15px 45px #bd8e342b,-8px 0 35px #883b501a,8px 0 35px #624b7626,inset 0 0 45px #e8c57c08;
+}
+.card[data-fx="saber"]>canvas.saber-fx{position:absolute;inset:0;width:100%;height:100%;z-index:3;pointer-events:none;}
+.cover-placeholder{
+  width:55%;max-width:155px;height:100%;max-height:220px;border:1px solid #bd9a635c;border-radius:8px;
+  display:flex;align-items:center;justify-content:center;background:linear-gradient(145deg,#191019b0,#151019e0);
+  box-shadow:0 8px 28px #0005,inset 4px 0 0 #e8c57c0a;color:#d4c0a2;
+  font-size:14px;letter-spacing:.12em;text-align:center;padding:14px;line-height:1.9;
+}
+.wl-cover{position:relative;display:block;width:min(55%,154.43px);aspect-ratio:716/1020;border-radius:8px;overflow:hidden;box-shadow:0 8px 28px #0007;transition:transform .4s,box-shadow .4s;}
+.cover-frame .wl-cover img{display:block;width:100%;max-width:100%;height:100%;max-height:none;object-fit:cover;border-radius:0;box-shadow:none;}
+.card:hover .cover-frame .wl-cover{transform:scale(1.03);box-shadow:0 12px 40px #0009;}
+.card:hover .cover-frame .wl-cover img{transform:none;box-shadow:none;}
+.wl-cover-title{position:absolute;top:5%;left:0;right:0;color:#382a3d;font-family:"Noto Serif TC","PMingLiU",serif;font-size:clamp(16px,1.6vw,22px);font-weight:700;letter-spacing:.16em;text-indent:.16em;line-height:1.5;text-align:center;text-shadow:0 1px 5px #fff9;pointer-events:none;}
+.card[data-fx="saber"] .seal{color:var(--victory-gold);opacity:.95;text-shadow:0 0 22px #e8c57c26;}
+.card[data-fx="saber"] .card-enter{color:var(--victory-gold);white-space:nowrap;}
+.card[data-fx="saber"] .card-foot{gap:12px;flex-wrap:wrap;}
+.card[data-fx="saber"] .card-books li{gap:.4rem;}
+.card[data-fx="saber"] .group-name{flex-shrink:0;color:#d4baa0;}
+.card[data-fx="saber"] .group-titles{min-width:0;}
+.card-link>*{position:relative;z-index:1;}
+@supports(grid-template-rows:subgrid){
+  @media(min-width:700px){
+    .card{display:grid;grid-template-rows:subgrid;grid-row:span 7;row-gap:0;}
+    .card-link{display:contents;}
+    .card-desc{align-self:start;}
+    .card-books{align-self:start;}
+    .card-foot{align-self:end;}
+  }
+}
+.card-link:focus-visible{outline:2px solid #e8c57c;outline-offset:7px;border-radius:3px;}
+#victory-fx{position:fixed;inset:0;width:100%;height:100%;pointer-events:none;z-index:5;}
+@media(prefers-reduced-motion:reduce){
+  .card[data-fx="saber"]{animation:none!important;transition:none!important;}
+  .card[data-fx="saber"].is-celebrating,.card[data-fx="saber"]:focus-within{transform:none;}
+  #victory-fx{display:none;}
+  /* Explicit hover/focus opts into this card's requested effect, not a browser-wide preference change. */
+  #victory-fx.is-playing{display:block;}
+}
 </style>
-</head>
+<style id="wl-camera-flash">
+.card[data-fx="saber"] .cover-frame .wl-cover.b-designed{overflow:visible;animation:none;box-shadow:0 8px 28px #0007;}
+.card[data-fx="saber"] .cover-frame .wl-cover.b-designed img{border-radius:inherit;}
+.card[data-fx="saber"] .wl-cover::before,.card[data-fx="saber"] .wl-cover::after{content:none;animation:none;}
+.wl-press-lights{position:absolute;inset:0;display:block;pointer-events:none;z-index:2;opacity:0;transition:opacity .2s;}
+.wl-press-lights i{position:absolute;display:block;width:var(--size);height:var(--size);border-radius:50%;background:radial-gradient(circle,#ffffffa6 0%,#f1f5ff38 20%,#eef3ff12 43%,#ffffff00 72%);filter:blur(.65px);opacity:0;animation:wl-press-glimmer var(--cycle) ease-in-out var(--delay) infinite paused;}
+@keyframes wl-press-glimmer{0%,8%,22%,60%,74%,100%{opacity:0;}14%{opacity:.4;}67%{opacity:.24;}}
+@media(hover:hover){.card:hover .wl-press-lights{opacity:1;}.card:hover .wl-press-lights i{animation-play-state:running;}}
+@media(prefers-reduced-motion:reduce){.wl-press-lights i{animation-duration:12s;} .card:hover .wl-press-lights{opacity:.65;}}
+html.wl-zoom-paused .wl-press-lights{opacity:0!important;transition:none!important;}
+html.wl-zoom-paused .wl-press-lights i{animation-play-state:paused!important;}
+</style>
+<style id="wl-zoom-guard-style">
+html.wl-zoom-paused #victory-fx,html.wl-zoom-paused #bg-fx,html.wl-zoom-paused canvas.fx,html.wl-zoom-paused canvas.saber-fx{visibility:hidden!important;}
+html.wl-zoom-paused .wl-cover{animation:none!important;box-shadow:none!important;}
+html.wl-zoom-paused .card,html.wl-zoom-paused .card::before,html.wl-zoom-paused .card::after{animation-play-state:paused!important;transition:none!important;}
+</style><script id="wl-zoom-guard">
+(function(){
+ 'use strict';
+ var viewport=window.visualViewport,pinching=false,gestureScale=1,gestureBase=1;
+ function update(){
+  var scale=viewport?viewport.scale:gestureScale;
+  var paused=pinching||scale>1.02;
+  document.documentElement.classList.toggle('wl-zoom-paused',paused);
+  if(window.__wlZoomPaused===paused)return;
+  window.__wlZoomPaused=paused;
+  window.dispatchEvent(new Event('wlzoomchange'));
+ }
+ window.__wlZoomPaused=false;
+ if(viewport){viewport.addEventListener('resize',update);viewport.addEventListener('scroll',update);}
+ document.addEventListener('touchstart',function(e){if(e.touches.length>1){pinching=true;update();}},{passive:true});
+ function finishTouch(e){pinching=e.touches.length>1;update();}
+ document.addEventListener('touchend',finishTouch,{passive:true});
+ document.addEventListener('touchcancel',finishTouch,{passive:true});
+ document.addEventListener('gesturestart',function(){pinching=true;gestureBase=gestureScale;update();},{passive:true});
+ document.addEventListener('gesturechange',function(e){if(!viewport)gestureScale=gestureBase*(e.scale||1);update();},{passive:true});
+ document.addEventListener('gestureend',function(e){pinching=false;if(!viewport&&e.scale)gestureScale=gestureBase*e.scale;update();},{passive:true});
+ window.addEventListener('resize',update);window.addEventListener('pageshow',update);
+ update();
+})();
+</script><style id="wl-selected-cover" data-design="B29">/* 標題字外框取自 Barlow ExtraBold，(c) 2017 The Barlow Project Authors，SIL Open Font License 1.1 */
+.wl-cover.b-designed{position:relative;display:block;width:fit-content;max-width:55%;height:auto;max-height:100%;aspect-ratio:auto;container-type:normal;overflow:hidden;border-radius:8px;background:transparent;}
+.cover-frame .b-designed img,.cover-stage .b-designed img{position:static;display:block;width:100%;height:100%;max-width:none;max-height:none;object-fit:contain;border-radius:0;box-shadow:none;transform:none!important;}
+.b-designed>.b-lettering{position:absolute;top:1.1%;right:3.5%;width:55%;height:auto;overflow:hidden;display:block;pointer-events:none;}
+
+.cover-frame .wl-cover.b-designed img{width:auto;height:auto;max-width:100%;max-height:220px;object-fit:contain;}
+</style><style id="wl-seal-breathe">
+.card[data-fx="saber"] .seal{color:var(--saber-red,#bd526f);opacity:.95;animation:none!important;transition:none;text-shadow:none;}
+</style><style id="book-cover-edge-flow">
+.cover-frame .book-cover-shell{position:relative;display:block;width:fit-content;max-width:55%;height:auto;max-height:100%;border-radius:8px;line-height:0;transition:transform .4s;}
+.cover-frame .book-cover-shell>img{display:block;width:auto;height:auto;max-width:100%;max-height:220px;border-radius:inherit;transform:none!important;}
+.card:hover .cover-frame .book-cover-shell{transform:scale(1.03);}
+.cover-frame .book-edge-flow{position:absolute;inset:-1px;width:calc(100% + 2px);height:calc(100% + 2px);overflow:visible;pointer-events:none;z-index:3;opacity:0;transition:opacity .25s;}
+.book-edge-flow rect{width:calc(100% - 2px);height:calc(100% - 2px);fill:none;stroke:#fff;stroke-linecap:round;vector-effect:non-scaling-stroke;animation:none;}
+.book-edge-flow .edge-tail{stroke-width:1.2;stroke-opacity:.6;stroke-dasharray:none;filter:drop-shadow(0 0 4px #ffffff88);}
+.book-edge-flow .edge-core{display:none;}
+.book-edge-flow .edge-tip{display:none;}
+.card:hover .book-edge-flow,.card:focus-within .book-edge-flow{opacity:1;}
+.card:hover .book-edge-flow rect,.card:focus-within .book-edge-flow rect{animation-play-state:running;}
+
+@media(prefers-reduced-motion:reduce){.book-edge-flow rect{animation-duration:10s;}}
+html.wl-zoom-paused .book-edge-flow{opacity:0!important;transition:none!important;}
+html.wl-zoom-paused .book-edge-flow rect{animation-play-state:paused!important;}
+</style><style id="wl-card-celebration-scope">
+.card[data-fx="saber"]{overflow:hidden;}
+.card[data-fx="saber"]>#victory-fx{position:absolute;inset:0;width:100%;height:100%;z-index:2;pointer-events:none;}
+.card[data-fx="saber"].is-celebrating,.card[data-fx="saber"]:focus-within{box-shadow:0 15px 45px #bd8e342b,0 0 32px #e8c57c20,inset 0 0 45px #e8c57c08;}
+#wl-victory-aura{position:fixed;inset:0;pointer-events:none;z-index:0;opacity:0;transition:opacity .6s;background:radial-gradient(ellipse 80% 72% at 50% 0%,#f3cf7938 0%,#d7a44c1a 42%,#c2964000 78%),linear-gradient(180deg,#d7b46d08,transparent 70%);}
+html.wl-victory-on #wl-victory-aura{opacity:1;}
+html.wl-zoom-paused #wl-victory-aura{opacity:0;}
+</style><style id="wl-victory-sunlight">
+/* Broad, warm illumination across the page; no particles outside the card. */
+#wl-victory-aura{
+ transition:opacity .75s ease;
+ background:
+  radial-gradient(ellipse 75% 78% at 88% -5%,#fffbeed9 0%,#ffe9ac8f 24%,#f4c66f38 56%,#dfac4b00 82%),
+  radial-gradient(ellipse 100% 90% at 12% 18%,#ffe8a357 0%,#eac17224 55%,#d1a25200 85%),
+  linear-gradient(112deg,transparent 20%,#fff5ce1f 26%,transparent 35%,#fff6dc1a 48%,transparent 60%),
+  linear-gradient(180deg,#dca64c80 0%,#ab752944 58%,#6a45132b 100%);
+}
+html.wl-victory-on:not(.wl-zoom-paused){--dim:#ead8b5;--line:#8e7044;--faint:#ad8a54;--cr:#e3c993;}
+html.wl-victory-on:not(.wl-zoom-paused) .card{
+ background:radial-gradient(ellipse 130% 90% at 80% 0%,#f9d88c2e 0%,#e7b66b0a 55%,transparent 85%),#3b2b21;
+ border-color:#c8a76d;
+ box-shadow:0 10px 38px #ffd18438,0 0 28px #f4ce812e,inset 0 1px 0 #fff0c9a6,inset 0 0 65px #ffd38417;
+}
+html.wl-victory-on:not(.wl-zoom-paused) .card[data-fx="saber"]{
+ border-color:#f5dca0;
+ box-shadow:0 14px 58px #ffd37b66,0 0 40px #fff0b847,inset 0 1px 0 #fff5d5d9,inset 0 0 70px #ffe1a126;
+}
+html.wl-victory-on:not(.wl-zoom-paused) .card-title{color:#fff2d8;}
+html.wl-victory-on:not(.wl-zoom-paused) .header .mark,
+html.wl-victory-on:not(.wl-zoom-paused) .footer{color:#fbe7ba;}
+</style></head>
 <body>
 <canvas id="bg-fx"></canvas>
 
@@ -82,7 +228,7 @@ a{color:inherit;text-decoration:none;}
 
   <div class="card live" data-fx="sniper">
     <canvas class="fx"></canvas>
-    <div class="cover-frame"><img src="cover-re.jpg" alt="ROYAL EMBLEM 封面"></div>
+    <div class="cover-frame"><span class="book-cover-shell"><img src="cover-re.jpg" alt="ROYAL EMBLEM 封面"><svg class="book-edge-flow" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false"><rect class="edge-tail" x="1" y="1" width="100%" height="100%" rx="8" pathLength="100"/><rect class="edge-core" x="1" y="1" width="100%" height="100%" rx="8" pathLength="100"/><rect class="edge-tip" x="1" y="1" width="100%" height="100%" rx="8" pathLength="100"/></svg></span></div>
     <div class="seal">槍</div>
     <a href="REwithSE.html" class="card-link">
       <div class="card-title">ROYAL EMBLEM 系列</div>
@@ -104,7 +250,7 @@ a{color:inherit;text-decoration:none;}
 
   <div class="card live" data-fx="fire">
     <canvas class="fx"></canvas>
-    <div class="cover-frame"><img src="cover-cae.jpg" alt="帝國別史 封面"></div>
+    <div class="cover-frame"><span class="book-cover-shell"><img src="cover-cae.jpg" alt="帝國別史 封面"><svg class="book-edge-flow" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false"><rect class="edge-tail" x="1" y="1" width="100%" height="100%" rx="8" pathLength="100"/><rect class="edge-core" x="1" y="1" width="100%" height="100%" rx="8" pathLength="100"/><rect class="edge-tip" x="1" y="1" width="100%" height="100%" rx="8" pathLength="100"/></svg></span></div>
     <div class="seal">劍</div>
     <a href="CoA.html" class="card-link">
       <div class="card-title">阿德剌斯忒亞帝國別史系列</div>
@@ -127,7 +273,7 @@ a{color:inherit;text-decoration:none;}
 
   <div class="card soon" data-fx="steam">
     <canvas class="fx"></canvas>
-    <div class="cover-frame"><img src="cover-dr.jpg" alt="Drops of Rain 封面"></div>
+    <div class="cover-frame"><span class="book-cover-shell"><img src="cover-dr.jpg" alt="Drops of Rain 封面"><svg class="book-edge-flow" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false"><rect class="edge-tail" x="1" y="1" width="100%" height="100%" rx="8" pathLength="100"/><rect class="edge-core" x="1" y="1" width="100%" height="100%" rx="8" pathLength="100"/><rect class="edge-tip" x="1" y="1" width="100%" height="100%" rx="8" pathLength="100"/></svg></span></div>
     <div class="seal">雨</div>
     <div class="card-title">Drops of Rain</div>
     <div class="card-tag">異想短篇集</div>
@@ -144,7 +290,29 @@ a{color:inherit;text-decoration:none;}
     </div>
   </div>
 
+  <div class="card live" data-fx="saber">
+    <canvas class="saber-fx" aria-hidden="true"></canvas><canvas id="victory-fx" aria-hidden="true"></canvas>
+    <div class="cover-frame"><div class="wl-cover b-designed"><img src="cover-wl.JPG" width="716" height="1020" alt="界線之內封面：貝雷絲與艾黛爾賈特相擁"><svg class="b-lettering" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 440 178" aria-hidden="true" focusable="false" text-rendering="geometricPrecision"><defs><path id="cover-29-title" d="M137.33 68.99L122.03 6.8L121.91 6.43Q121.91 5.6 123.15 5.6L139.69 5.6Q141.04 5.6 141.15 6.61L146.22 36.88Q146.33 37.16 146.56 37.16Q146.78 37.16 146.89 36.88L151.96 6.61Q152.07 5.6 153.42 5.6L166.58 5.6Q167.93 5.6 168.05 6.61L173.67 36.88Q173.79 37.16 174.01 37.16Q174.24 37.16 174.24 36.88L178.85 6.61Q178.96 5.6 180.2 5.6L196.4 5.6Q197.87 5.6 197.64 6.8L183.12 68.99Q183.01 70 181.66 70L167.26 70Q165.91 70 165.8 68.99L160.17 37.52Q160.06 37.25 159.78 37.25Q159.5 37.25 159.5 37.52L154.54 68.99Q154.43 70 153.19 70L138.79 70Q137.55 70 137.33 68.99ZM203.45 68.9L203.45 6.7Q203.45 6.24 203.84 5.92Q204.23 5.6 204.8 5.6L220.78 5.6Q221.34 5.6 221.73 5.92Q222.13 6.24 222.13 6.7L222.13 68.9Q222.13 69.36 221.73 69.68Q221.34 70 220.78 70L204.8 70Q204.23 70 203.84 69.68Q203.45 69.36 203.45 68.9ZM278.16 6.7L278.16 17.56Q278.16 18.02 277.76 18.34Q277.37 18.66 276.81 18.66L262.85 18.66Q262.29 18.66 262.29 19.12L262.29 68.9Q262.29 69.36 261.9 69.68Q261.5 70 260.94 70L244.96 70Q244.4 70 244.01 69.68Q243.61 69.36 243.61 68.9L243.61 19.12Q243.61 18.66 243.05 18.66L229.66 18.66Q229.1 18.66 228.7 18.34Q228.31 18.02 228.31 17.56L228.31 6.7Q228.31 6.24 228.7 5.92Q229.1 5.6 229.66 5.6L276.81 5.6Q277.37 5.6 277.76 5.92Q278.16 6.24 278.16 6.7ZM313.7 5.6L329.68 5.6Q330.24 5.6 330.64 5.92Q331.03 6.24 331.03 6.7L331.03 68.9Q331.03 69.36 330.64 69.68Q330.24 70 329.68 70L313.7 70Q313.14 70 312.74 69.68Q312.35 69.36 312.35 68.9L312.35 44.79Q312.35 44.33 311.79 44.33L303.69 44.33Q303.12 44.33 303.12 44.79L303.12 68.9Q303.12 69.36 302.73 69.68Q302.34 70 301.77 70L285.8 70Q285.23 70 284.84 69.68Q284.45 69.36 284.45 68.9L284.45 6.7Q284.45 6.24 284.84 5.92Q285.23 5.6 285.8 5.6L301.77 5.6Q302.34 5.6 302.73 5.92Q303.12 6.24 303.12 6.7L303.12 30.72Q303.12 31.18 303.69 31.18L311.79 31.18Q312.35 31.18 312.35 30.72L312.35 6.7Q312.35 6.24 312.74 5.92Q313.14 5.6 313.7 5.6ZM338.78 68.9L338.78 6.7Q338.78 6.24 339.17 5.92Q339.56 5.6 340.13 5.6L356.1 5.6Q356.67 5.6 357.06 5.92Q357.45 6.24 357.45 6.7L357.45 68.9Q357.45 69.36 357.06 69.68Q356.67 70 356.1 70L340.13 70Q339.56 70 339.17 69.68Q338.78 69.36 338.78 68.9ZM398.95 5.6L414.7 5.6Q415.27 5.6 415.66 5.92Q416.06 6.24 416.06 6.7L416.06 68.9Q416.06 69.36 415.66 69.68Q415.27 70 414.7 70L396.81 70Q395.58 70 395.24 69.08L384.1 37.06Q383.99 36.79 383.71 36.74Q383.42 36.7 383.42 37.06L383.65 68.9Q383.65 69.36 383.26 69.68Q382.86 70 382.3 70L366.55 70Q365.98 70 365.59 69.68Q365.2 69.36 365.2 68.9L365.2 6.7Q365.2 6.24 365.59 5.92Q365.98 5.6 366.55 5.6L384.21 5.6Q385.45 5.6 385.79 6.52L397.04 38.72Q397.15 39 397.43 39Q397.71 39 397.71 38.63L397.6 6.7Q397.6 6.24 398 5.92Q398.39 5.6 398.95 5.6ZM174.19 155.86L174.19 91.64Q174.19 91.17 174.61 90.83Q175.03 90.5 175.63 90.5L192.63 90.5Q193.22 90.5 193.64 90.83Q194.06 91.17 194.06 91.64L194.06 143.03Q194.06 143.51 194.66 143.51L219.08 143.51Q219.68 143.51 220.1 143.84Q220.52 144.18 220.52 144.65L220.52 155.86Q220.52 156.34 220.1 156.67Q219.68 157 219.08 157L175.63 157Q175.03 157 174.61 156.67Q174.19 156.34 174.19 155.86ZM226.47 155.86L226.47 91.64Q226.47 91.17 226.88 90.83Q227.3 90.5 227.9 90.5L244.9 90.5Q245.5 90.5 245.92 90.83Q246.34 91.17 246.34 91.64L246.34 155.86Q246.34 156.34 245.92 156.67Q245.5 157 244.9 157L227.9 157Q227.3 157 226.88 156.67Q226.47 156.34 226.47 155.86ZM290.5 90.5L307.26 90.5Q307.86 90.5 308.28 90.83Q308.7 91.17 308.7 91.64L308.7 155.86Q308.7 156.34 308.28 156.67Q307.86 157 307.26 157L288.23 157Q286.91 157 286.55 156.05L274.7 122.99Q274.58 122.7 274.28 122.66Q273.98 122.61 273.98 122.99L274.22 155.86Q274.22 156.34 273.8 156.67Q273.39 157 272.79 157L256.03 157Q255.43 157 255.01 156.67Q254.59 156.34 254.59 155.86L254.59 91.64Q254.59 91.17 255.01 90.83Q255.43 90.5 256.03 90.5L274.82 90.5Q276.14 90.5 276.5 91.45L288.47 124.7Q288.59 124.98 288.89 124.98Q289.19 124.98 289.19 124.6L289.07 91.64Q289.07 91.17 289.49 90.83Q289.91 90.5 290.5 90.5ZM361.59 103.99L337.53 103.99Q336.93 103.99 336.93 104.47L336.93 116.44Q336.93 116.91 337.53 116.91L350.7 116.91Q351.3 116.91 351.72 117.24Q352.14 117.58 352.14 118.05L352.14 129.35Q352.14 129.83 351.72 130.16Q351.3 130.5 350.7 130.5L337.53 130.5Q336.93 130.5 336.93 130.97L336.93 143.03Q336.93 143.51 337.53 143.51L361.59 143.51Q362.19 143.51 362.61 143.84Q363.03 144.18 363.03 144.65L363.03 155.86Q363.03 156.34 362.61 156.67Q362.19 157 361.59 157L318.5 157Q317.9 157 317.48 156.67Q317.06 156.34 317.06 155.86L317.06 91.64Q317.06 91.17 317.48 90.83Q317.9 90.5 318.5 90.5L361.59 90.5Q362.19 90.5 362.61 90.83Q363.03 91.17 363.03 91.64L363.03 102.85Q363.03 103.33 362.61 103.66Q362.19 103.99 361.59 103.99ZM368.75 140.09L368.75 137.15Q368.75 136.67 369.17 136.34Q369.59 136 370.19 136L386.95 136Q387.55 136 387.96 136.34Q388.38 136.67 388.38 137.15L388.38 139.33Q388.38 141.61 389.76 142.94Q391.14 144.27 393.29 144.27Q395.45 144.27 396.82 142.99Q398.2 141.71 398.2 139.71Q398.2 137.53 396.05 135.77Q393.89 134.01 387.43 130.31Q381.44 126.88 377.61 124.18Q373.78 121.47 371.03 117.43Q368.27 113.39 368.27 108.08Q368.27 102.66 371.32 98.48Q374.38 94.3 379.94 92.02Q385.51 89.74 392.69 89.74Q400 89.74 405.56 92.07Q411.13 94.39 414.18 98.62Q417.23 102.85 417.23 108.36L417.23 110.64Q417.23 111.12 416.82 111.45Q416.4 111.78 415.8 111.78L399.16 111.78Q398.56 111.78 398.14 111.45Q397.72 111.12 397.72 110.64L397.72 107.98Q397.72 105.89 396.28 104.56Q394.85 103.23 392.69 103.23Q390.54 103.23 389.22 104.56Q387.9 105.89 387.9 108.08Q387.9 110.45 389.94 112.35Q391.98 114.25 398.2 117.86Q405.74 122.33 409.57 125.08Q413.4 127.84 415.56 131.21Q417.71 134.58 417.71 139.14Q417.71 147.69 410.95 152.72Q404.19 157.76 393.17 157.76Q385.87 157.76 380.36 155.53Q374.86 153.29 371.8 149.26Q368.75 145.22 368.75 140.09ZM119.83 133.98L119.83 137.76Q119.83 137.92 119.72 138.03Q119.61 138.14 119.45 138.14L115.48 138.14Q115.32 138.14 115.32 138.3L115.32 155.62Q115.32 155.78 115.21 155.89Q115.1 156 114.94 156L110.4 156Q110.24 156 110.13 155.89Q110.02 155.78 110.02 155.62L110.02 138.3Q110.02 138.14 109.86 138.14L106.05 138.14Q105.89 138.14 105.78 138.03Q105.67 137.92 105.67 137.76L105.67 133.98Q105.67 133.82 105.78 133.71Q105.89 133.6 106.05 133.6L119.45 133.6Q119.61 133.6 119.72 133.71Q119.83 133.82 119.83 133.98ZM129.92 133.6L134.46 133.6Q134.62 133.6 134.73 133.71Q134.84 133.82 134.84 133.98L134.84 155.62Q134.84 155.78 134.73 155.89Q134.62 156 134.46 156L129.92 156Q129.76 156 129.65 155.89Q129.54 155.78 129.54 155.62L129.54 147.23Q129.54 147.07 129.38 147.07L127.08 147.07Q126.92 147.07 126.92 147.23L126.92 155.62Q126.92 155.78 126.81 155.89Q126.69 156 126.53 156L122 156Q121.84 156 121.72 155.89Q121.61 155.78 121.61 155.62L121.61 133.98Q121.61 133.82 121.72 133.71Q121.84 133.6 122 133.6L126.53 133.6Q126.69 133.6 126.81 133.71Q126.92 133.82 126.92 133.98L126.92 142.34Q126.92 142.5 127.08 142.5L129.38 142.5Q129.54 142.5 129.54 142.34L129.54 133.98Q129.54 133.82 129.65 133.71Q129.76 133.6 129.92 133.6ZM148.9 138.14L142.48 138.14Q142.32 138.14 142.32 138.3L142.32 142.34Q142.32 142.5 142.48 142.5L145.99 142.5Q146.15 142.5 146.27 142.61Q146.38 142.72 146.38 142.88L146.38 146.69Q146.38 146.85 146.27 146.96Q146.15 147.07 145.99 147.07L142.48 147.07Q142.32 147.07 142.32 147.23L142.32 151.3Q142.32 151.46 142.48 151.46L148.9 151.46Q149.06 151.46 149.17 151.57Q149.29 151.68 149.29 151.84L149.29 155.62Q149.29 155.78 149.17 155.89Q149.06 156 148.9 156L137.4 156Q137.24 156 137.13 155.89Q137.01 155.78 137.01 155.62L137.01 133.98Q137.01 133.82 137.13 133.71Q137.24 133.6 137.4 133.6L148.9 133.6Q149.06 133.6 149.17 133.71Q149.29 133.82 149.29 133.98L149.29 137.76Q149.29 137.92 149.17 138.03Q149.06 138.14 148.9 138.14Z" /><clippath id="cover-29-letters" clipPathUnits="userSpaceOnUse"><use href="#cover-29-title" /></clippath><lineargradient id="cover-29-foil" x1="0" y1="0" x2=".25" y2="1"><stop offset="0" stop-color="#6e5228" /><stop offset=".30" stop-color="#b68a42" /><stop offset=".46" stop-color="#f2e2b5" /><stop offset=".53" stop-color="#aa7c34" /><stop offset=".78" stop-color="#d4b371" /><stop offset="1" stop-color="#785726" /></lineargradient><mask id="cover-29-riposte" maskUnits="userSpaceOnUse" x="0" y="0" width="440" height="178"><rect width="440" height="178" fill="white" /><path d="M108 63L352 27 M428 140L195 103" fill="none" stroke="black" stroke-width="7" /></mask></defs><g fill="#203d37"><g transform="translate(267.5 86) skewX(-7) scale(.82) translate(-262.5 -81.3)"><g mask="url(#cover-29-riposte)" stroke="#ae813b" stroke-width="1.5" paint-order="stroke fill"><use href="#cover-29-title" /></g><g clip-path="url(#cover-29-letters)" fill="#ae813b"><path d="M108 68L352 31L307 44Z M428 145L195 107L240 121Z" /></g></g><g fill="none"><path d="M121 30L126 5H432 M414 146L409 171H103" stroke="#203d37" stroke-width="3" /><path d="M129 30L132 13H257 M282 13H422 M406 146L403 163H278 M253 163H113" stroke="#ae813b" stroke-width="2.5" /></g></g></svg><svg class="book-edge-flow" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false"><rect class="edge-tail" x="1" y="1" width="100%" height="100%" rx="8" pathLength="100"/><rect class="edge-core" x="1" y="1" width="100%" height="100%" rx="8" pathLength="100"/><rect class="edge-tip" x="1" y="1" width="100%" height="100%" rx="8" pathLength="100"/></svg><span class="wl-press-lights" aria-hidden="true"><i style="left:-30px;top:10%;--size:19px;--cycle:7.3s;--delay:-1.6s"></i><i style="left:-47px;top:32%;--size:27px;--cycle:9.1s;--delay:-5.4s"></i><i style="left:-32px;top:55%;--size:16px;--cycle:8.2s;--delay:-3.1s"></i><i style="left:-43px;top:78%;--size:23px;--cycle:10.7s;--delay:-8.1s"></i><i style="right:-40px;top:18%;--size:25px;--cycle:8.6s;--delay:-4.8s"></i><i style="right:-29px;top:41%;--size:16px;--cycle:11.3s;--delay:-2.2s"></i><i style="right:-48px;top:63%;--size:26px;--cycle:9.7s;--delay:-7.4s"></i><i style="right:-32px;top:84%;--size:20px;--cycle:7.9s;--delay:-0.6s"></i></span></div></div>
+    <div class="seal">光</div>
+    <a href="WL.html" class="card-link">
+      <div class="card-title">界線之內</div>
+      <div class="card-tag">現代 AU</div>
+      <div class="card-desc">從反覆觀看賽事，到親自拿起軍刀，艾黛爾賈特追逐著前世界冠軍貝雷絲的光芒，成長為獨當一面的國家隊隊長。</div>
+      <ul class="card-books">
+        <li><span class="group-name">師生之間</span><span class="group-titles">求教、同行、心聲、習慣</span></li>
+        <li><span class="group-name">冠軍之路</span><span class="group-titles">界線之內、舊影、交棒、並肩</span></li>
+        <li><span class="group-name">並肩而行</span><span class="group-titles">公開、答案</span></li>
+        <li><span class="group-name">劍道之外</span><span class="group-titles">家宴、休假、講課</span></li>
+      </ul>
+      <div class="card-foot">
+        <span class="status"><span class="dot on"></span>公開中</span>
+        <span class="card-enter">開始閱讀 →</span>
+      </div>
+    </a>
+  </div>
+
 </main>
+
 
 <footer class="footer">
   <div>作者　邑</div>
@@ -230,7 +398,11 @@ a{color:inherit;text-decoration:none;}
 
   function bgStop(){bgActive=null;}
 
+  window.addEventListener('wlzoomchange',function(){
+    if(!window.__wlZoomPaused&&bgActive&&!bgRaf){bgSz();bgRaf=requestAnimationFrame(bgDraw);}
+  });
   function bgDraw(){
+    if(window.__wlZoomPaused){bgRaf=0;bgCtx.clearRect(0,0,bgW,bgH);return;}
     bgCtx.clearRect(0,0,bgW,bgH);
     bgD.t++;
 
@@ -333,7 +505,7 @@ a{color:inherit;text-decoration:none;}
   }
 
   /* === Card FX === */
-  var cards = document.querySelectorAll('.card[data-fx]');
+  var cards = document.querySelectorAll('.card[data-fx]:not([data-fx="saber"])');
   cards.forEach(function(card){
     var cvs = card.querySelector('canvas.fx');
     var ctx = cvs.getContext('2d');
@@ -400,25 +572,25 @@ a{color:inherit;text-decoration:none;}
       } else if(fx === 'steam'){
         for(var i = 0; i < 3; i++){
           particles.push({
-            type: Math.random() > .4 ? 'rain' : 'steam',
+            type:'rain',
             x: Math.random() * w,
-            y: Math.random() > .4 ? -2 : h - 10,
-            vx: Math.random() > .4 ? (.2 + Math.random() * .3) : (Math.random() - .5) * .3,
-            vy: Math.random() > .4 ? (2 + Math.random() * 2.5) : -(0.4 + Math.random() * 0.8),
+            y: -2,
+            vx: .2 + Math.random() * .3,
+            vy: 2 + Math.random() * 2.5,
             r: .6 + Math.random() * .4,
             life: 1,
-            decay: Math.random() > .4 ? 0 : (.006 + Math.random() * .006),
-            len: 6 + Math.random() * 10,
-            amp: 8 + Math.random() * 12,
-            freq: .02 + Math.random() * .02,
-            phase: Math.random() * Math.PI * 2,
-            size: 3 + Math.random() * 5
+            decay: 0,
+            len: 6 + Math.random() * 10
           });
         }
       }
     }
 
+    window.addEventListener('wlzoomchange',function(){
+      if(!window.__wlZoomPaused&&card._hovering&&!card._ticking){card._ticking=true;tick();}
+    });
     function draw(){
+      if(window.__wlZoomPaused){raf=0;ctx.clearRect(0,0,w,h);return;}
       ctx.clearRect(0, 0, w, h);
 
       if(fx === 'sniper' && card._hovering){
@@ -502,15 +674,6 @@ a{color:inherit;text-decoration:none;}
           ctx.moveTo(p.x, p.y);
           ctx.lineTo(p.x - p.vx * .6, p.y - p.len);
           ctx.stroke();
-        } else if(p.type === 'steam'){
-          var sr = p.size * (1 - p.life * .3);
-          p.x += Math.sin(p.phase + p.y * p.freq) * .5;
-          var sa = p.life * .2;
-          var grad = ctx.createRadialGradient(p.x, p.y, 0, p.x, p.y, sr);
-          grad.addColorStop(0, 'rgba(66,232,255,' + sa + ')');
-          grad.addColorStop(1, 'rgba(66,232,255,0)');
-          ctx.fillStyle = grad;
-          ctx.fillRect(p.x - sr, p.y - sr, sr * 2, sr * 2);
         }
       }
 
@@ -522,6 +685,7 @@ a{color:inherit;text-decoration:none;}
     }
 
     function tick(){
+      if(window.__wlZoomPaused){card._ticking=false;return;}
       if(card._hovering){
         spawn();
         if(!raf){ resize(); raf = requestAnimationFrame(draw); }
@@ -552,5 +716,401 @@ a{color:inherit;text-decoration:none;}
 })();
 </script>
 
-</body>
+<script>
+(function(){
+  'use strict';
+  var card=document.querySelector('[data-fx="saber"]'),canvas=document.getElementById('victory-fx');
+  var ctx=canvas.getContext('2d'),bladeCanvas=card.querySelector('.saber-fx'),bladeCtx=bladeCanvas.getContext('2d');if(!ctx||!bladeCtx)return;
+  var reduce=window.matchMedia('(prefers-reduced-motion: reduce)'),touch=window.matchMedia('(hover: none)');
+  var width=0,height=0,cardWidth=0,cardHeight=0,bladeTop=0,raf=0,last=0,elapsed=0,burstAt=0,rainAt=0,opacity=0,exclusions=[];
+  var active=false,hovered=false,focused=false,inView=false,pieces=[],glints=[];
+  var colors=['#d9b76d','#f2dba0','#a64965','#9271ac','#e8c783','#ede5d5'];
+  function motionAllowed(){return !window.__wlZoomPaused&&(!reduce.matches||hovered||focused);}
+  function measureExclusions(){
+    var origin=card.getBoundingClientRect();
+    var sx=origin.width?width/origin.width:1,sy=origin.height?height/origin.height:1;
+    exclusions=[];
+    function protect(r,pad){
+      if(!r.width||!r.height)return;
+      exclusions.push({left:(r.left-origin.left)*sx-pad,top:(r.top-origin.top)*sy-pad,width:r.width*sx+pad*2,height:r.height*sy+pad*2});
+    }
+    card.querySelectorAll('.wl-cover').forEach(function(el){protect(el.getBoundingClientRect(),4);});
+    // Protect actual text lines, not full-height flex boxes or opaque background panels.
+    card.querySelectorAll('.seal,.card-title,.card-tag,.card-desc,.card-books,.card-foot').forEach(function(el){
+      var walker=document.createTreeWalker(el,4),node,range=document.createRange();
+      while((node=walker.nextNode())){
+        if(!node.nodeValue.trim())continue;
+        range.selectNodeContents(node);
+        Array.from(range.getClientRects()).forEach(function(r){protect(r,4);});
+      }
+    });
+  }
+  function resize(){
+    var r=card.getBoundingClientRect();width=r.width;height=r.height;var scale=Math.min(devicePixelRatio||1,2);
+    canvas.width=Math.ceil(width*scale);canvas.height=Math.ceil(height*scale);ctx.setTransform(scale,0,0,scale,0,0);
+    cardWidth=width;cardHeight=height;
+    bladeTop=Math.max(0,card.querySelector('.cover-frame').getBoundingClientRect().bottom-r.top+10);
+    bladeCanvas.width=Math.ceil(cardWidth*scale);bladeCanvas.height=Math.ceil(cardHeight*scale);bladeCtx.setTransform(scale,0,0,scale,0,0);
+    measureExclusions();
+  }
+  function launch(count,initial){
+    for(var i=0;i<count;i++){
+      pieces.push({x:Math.random()*width,y:initial?Math.random()*height:-25,
+        vx:(Math.random()-.5)*70,vy:45+Math.random()*65,
+        w:3+Math.random()*4,h:8+Math.random()*10,angle:Math.random()*Math.PI,spin:(Math.random()-.5)*2.4,ribbon:i%7===0,
+        phase:Math.random()*Math.PI*2,color:colors[i%colors.length],life:6+Math.random()*3});
+    }
+    if(pieces.length>160)pieces.splice(0,pieces.length-160);
+  }
+  function seedGlints(){
+    glints=[];
+    for(var i=0;i<26;i++)glints.push({x:Math.random()*width,y:Math.random()*height,r:1+Math.random()*2.2,phase:Math.random()*Math.PI*2});
+  }
+  function paintBlades(){
+    bladeCtx.clearRect(0,0,cardWidth,cardHeight);
+    if(!active||!motionAllowed())return;
+    // Same 4s / 5.2s breathing cadence as the reading cover; light travels along a fine blade.
+    var bandHeight=Math.max(0,cardHeight-bladeTop-20);
+    if(!bandHeight)return;
+    var cy=bladeTop+bandHeight*.5,reach=bandHeight*.43,fade=Math.min(1,elapsed/.7);
+    bladeCtx.save();bladeCtx.beginPath();bladeCtx.rect(0,bladeTop,cardWidth,bandHeight);bladeCtx.clip();
+    ['#c86580','#aa8ac5'].forEach(function(color,i){
+      var phase=elapsed*Math.PI/(i?5.2:4)+(i?1.9:0),travel=.5-.5*Math.cos(phase);
+      if(i)travel=1-travel;
+      var x1=cardWidth*(i?.04:-.12),x2=cardWidth*(i?.96:1.1);
+      var y1=cy+(i?-reach*.74:reach),y2=cy+(i?reach*.68:-reach);
+      bladeCtx.save();bladeCtx.globalAlpha=fade*.18;bladeCtx.strokeStyle=color;bladeCtx.lineWidth=.7;
+      bladeCtx.beginPath();bladeCtx.moveTo(x1,y1);bladeCtx.lineTo(x2,y2);bladeCtx.stroke();
+      var center=-.18+travel*1.36,start=center-.32,end=center+.32;
+      var streak=bladeCtx.createLinearGradient(x1+(x2-x1)*start,y1+(y2-y1)*start,x1+(x2-x1)*end,y1+(y2-y1)*end);
+      streak.addColorStop(0,'transparent');streak.addColorStop(.3,color);streak.addColorStop(.55,'#fff3e2');streak.addColorStop(.7,color);streak.addColorStop(1,'transparent');
+      bladeCtx.globalAlpha=fade*(.38+.55*Math.sin(travel*Math.PI));bladeCtx.strokeStyle=streak;
+      bladeCtx.shadowColor=color;bladeCtx.shadowBlur=4;bladeCtx.lineWidth=1.5;bladeCtx.stroke();
+      bladeCtx.globalAlpha=fade*.1;bladeCtx.lineWidth=5;bladeCtx.stroke();bladeCtx.restore();
+    });
+    bladeCtx.restore();
+  }
+  function sync(){
+    if(window.__wlZoomPaused){
+      cancelAnimationFrame(raf);raf=0;last=0;pieces=[];opacity=0;
+      canvas.classList.remove('is-playing');document.documentElement.classList.remove('wl-victory-on');
+      ctx.clearRect(0,0,width,height);bladeCtx.clearRect(0,0,cardWidth,cardHeight);return;
+    }
+    var wanted=(hovered||focused||(touch.matches&&inView))&&!document.hidden;
+    card.classList.toggle('is-celebrating',wanted);document.documentElement.classList.toggle('wl-victory-on',wanted);
+    canvas.classList.toggle('is-playing',wanted&&motionAllowed());
+    if(wanted===active){
+      if(active&&motionAllowed()&&!raf){elapsed=0;opacity=.8;launch(60,true);last=0;raf=requestAnimationFrame(draw);}
+      return;
+    }
+    active=wanted;
+    if(active){
+      document.body.style.backgroundColor='#16110b';
+      elapsed=0;burstAt=0;rainAt=0;pieces=[];resize();seedGlints();
+      if(motionAllowed()){opacity=.8;launch(60,true);last=0;if(!raf)raf=requestAnimationFrame(draw);}
+    }else if(document.body.style.backgroundColor==='rgb(22, 17, 11)')document.body.style.backgroundColor='';
+  }
+  function draw(time){
+    var dt=last?Math.min((time-last)/1000,.04):1/60;last=time;elapsed+=dt;
+    opacity=Math.max(0,Math.min(1,opacity+(active?dt*2:-dt*2.5)));
+    ctx.clearRect(0,0,width,height);paintBlades();
+    if(!motionAllowed()||(!active&&opacity===0)){pieces=[];raf=0;last=0;bladeCtx.clearRect(0,0,cardWidth,cardHeight);return;}
+    ctx.save();ctx.globalAlpha=opacity;
+    // Card-local canvas; the card clips every particle and light to its rounded bounds.
+    // Keep the continuous CSS card background visible under particles.
+    glints.forEach(function(g){
+      var a=.4+.5*(.5+.5*Math.sin(elapsed*1.4+g.phase));
+      var y=(g.y-elapsed*7+height*2)%height;
+      ctx.fillStyle='rgba(246,214,144,'+a+')';ctx.shadowColor='#e8c57c';ctx.shadowBlur=7;
+      ctx.beginPath();ctx.arc(g.x,y,g.r,0,Math.PI*2);ctx.fill();
+    });ctx.shadowBlur=0;
+    if(active&&elapsed-rainAt>.5){launch(6,false);rainAt=elapsed;}
+    if(active&&elapsed-burstAt>3.2){launch(16,false);burstAt=elapsed;}
+    for(var i=pieces.length-1;i>=0;i--){
+      var p=pieces[i];p.life-=dt;p.vy=Math.min(p.vy+125*dt,110);p.vx*=Math.pow(.98,dt*60);
+      p.x+=(p.vx+Math.sin(elapsed*2+p.phase)*16)*dt;p.y+=p.vy*dt;p.angle+=p.spin*dt;
+      if(p.life<=0||p.y>height+30){pieces.splice(i,1);continue;}
+      ctx.save();ctx.translate(p.x,p.y);ctx.rotate(p.angle);ctx.globalAlpha=opacity*Math.min(1,p.life);
+      var fold=Math.cos(elapsed*1.8+p.phase),shine=.5+.5*Math.sin(elapsed*1.8+p.phase);
+      ctx.scale(Math.max(.12,Math.abs(fold)),1);
+      var foil=ctx.createLinearGradient(-p.w,0,p.w,0);
+      foil.addColorStop(0,p.color);foil.addColorStop(.35,'#fff3cf');foil.addColorStop(.52,p.color);foil.addColorStop(1,fold>0?'#fff7e5':'#594035');
+      ctx.globalAlpha*=.7+shine*.3;ctx.fillStyle=foil;
+      if(p.ribbon){
+        // Alternating highlights follow the twists rather than a uniformly glowing squiggle.
+        for(var curl=0;curl<7;curl++){
+          var t0=curl/7,t1=(curl+1)/7,amp=p.w*1.8;
+          ctx.strokeStyle=curl%2?foil:p.color;ctx.lineWidth=curl%2?2.2:3.4;
+          ctx.beginPath();ctx.moveTo(Math.sin(t0*Math.PI*3+p.phase)*amp,(t0-.5)*p.h*4);
+          ctx.quadraticCurveTo(Math.sin((t0+t1)*.5*Math.PI*3+p.phase)*amp,((t0+t1)*.5-.5)*p.h*4,Math.sin(t1*Math.PI*3+p.phase)*amp,(t1-.5)*p.h*4);ctx.stroke();
+        }
+      }else{
+        ctx.beginPath();ctx.moveTo(-p.w/2,-p.h/2);ctx.lineTo(p.w/2,-p.h*.42);ctx.lineTo(p.w/2,p.h/2);ctx.lineTo(-p.w/2,p.h*.42);ctx.closePath();ctx.fill();
+        ctx.strokeStyle='rgba(255,248,221,.6)';ctx.lineWidth=.5;ctx.beginPath();ctx.moveTo(-p.w/2,-p.h/2);ctx.lineTo(p.w/2,-p.h*.42);ctx.stroke();
+      }ctx.restore();
+    }
+    ctx.restore();
+    // Clear only the transparent effect layers; the continuous CSS background stays untouched.
+    measureExclusions();exclusions.forEach(function(r){
+      ctx.clearRect(r.left,r.top,r.width,r.height);
+      bladeCtx.clearRect(r.left,r.top,r.width,r.height);
+    });
+    raf=requestAnimationFrame(draw);
+  }
+  card.addEventListener('pointerenter',function(e){if(e.pointerType!=='touch'){hovered=true;sync();}});
+  card.addEventListener('pointerleave',function(){hovered=false;sync();});
+  card.addEventListener('focusin',function(){focused=true;sync();});
+  card.addEventListener('focusout',function(e){if(!card.contains(e.relatedTarget)){focused=false;sync();}});
+  if('IntersectionObserver' in window){
+    var observer=new IntersectionObserver(function(entries){inView=entries[0].isIntersecting&&entries[0].intersectionRatio>=.4;sync();},{threshold:[0,.4,.65]});observer.observe(card);
+  }
+  document.addEventListener('visibilitychange',sync);
+  reduce.addEventListener('change',function(){canvas.classList.toggle('is-playing',active&&motionAllowed());if(!motionAllowed()){cancelAnimationFrame(raf);raf=0;ctx.clearRect(0,0,width,height);bladeCtx.clearRect(0,0,cardWidth,cardHeight);}else if(active&&!raf){last=0;raf=requestAnimationFrame(draw);}});
+  touch.addEventListener('change',sync);
+  window.addEventListener('wlzoomchange',function(){if(!window.__wlZoomPaused){resize();seedGlints();}sync();});
+  if(window.visualViewport){
+    window.visualViewport.addEventListener('resize',function(){if(!window.__wlZoomPaused)resize();});
+    window.visualViewport.addEventListener('scroll',function(){if(!window.__wlZoomPaused)measureExclusions();});
+  }
+  window.addEventListener('resize',resize);window.addEventListener('scroll',measureExclusions,{passive:true});resize();
+})();
+</script>
+<style id="cover-enlarge-style">
+.cover-frame [data-cover-enlarge]{cursor:zoom-in;touch-action:manipulation;}
+.cover-frame [data-cover-enlarge]:focus-visible{outline:2px solid #e8c57c;outline-offset:5px;}
+html.cover-zoom-open{overflow:hidden;scrollbar-gutter:stable;}
+.cover-zoom-dialog{position:fixed;inset:0;width:100%;height:100%;height:100dvh;max-width:none;max-height:none;margin:0;padding:0;border:0;overflow:hidden;background:transparent;color:#fff;}
+.cover-zoom-dialog::backdrop{background:rgba(5,5,12,.92);}
+.cover-zoom-dialog.cover-gesture-enabled,.cover-zoom-dialog.cover-gesture-enabled .cover-zoom-art{touch-action:none;}
+.cover-zoom-dialog .cover-zoom-art{-webkit-user-select:none;user-select:none;}
+.cover-zoom-dialog .cover-zoom-art{position:absolute;display:block;margin:0;padding:0;border:0;border-radius:8px;background:none;line-height:0;cursor:zoom-out;transform-origin:0 0;box-shadow:0 16px 64px #0009;touch-action:manipulation;-webkit-tap-highlight-color:transparent;}
+.cover-zoom-dialog .cover-zoom-art>img{display:block;width:100%;height:100%;max-width:none;max-height:none;margin:0;border-radius:inherit;object-fit:contain;box-shadow:none;transform:none;transition:none;}
+.cover-zoom-dialog .cover-zoom-art>.b-lettering{position:absolute;top:1.1%;right:3.5%;width:55%;height:auto;pointer-events:none;}
+.cover-zoom-dialog .cover-zoom-art:focus-visible{outline:2px solid #e8c57c;outline-offset:5px;}
+.cover-zoom-hint{position:absolute;left:0;right:0;bottom:max(12px,env(safe-area-inset-bottom));margin:0;text-align:center;font:14px/1.5 "Microsoft JhengHei",sans-serif;color:#d6cfc2;pointer-events:none;}
+</style>
+<script id="cover-enlarge-script">
+(function(){
+  'use strict';
+  if(document.getElementById('cover-zoom-dialog'))return;
+  var sources=Array.from(document.querySelectorAll('.cover-frame .book-cover-shell,.cover-frame .wl-cover'));
+  if(!sources.length)return;
+  var dialog=document.createElement('dialog');
+  dialog.id='cover-zoom-dialog';dialog.className='cover-zoom-dialog';
+  dialog.setAttribute('aria-label','封面放大檢視');
+  var hint=document.createElement('p');
+  hint.className='cover-zoom-hint';hint.textContent='點封面放回 · Esc 關閉';
+  dialog.appendChild(hint);document.body.appendChild(dialog);
+  var source=null,art=null,animation=null,closing=false,serial=0,ratio=1,previousFocus=null;
+  var reduce=window.matchMedia('(prefers-reduced-motion: reduce)');
+  var pointers=new Map(),gesture=null,suppressClick=false,zoom=1,panX=0,panY=0,baseBox=null,baseScale=1,lastFit=null;
+  var gestures=typeof window.PointerEvent==='function';
+  if(gestures){dialog.classList.add('cover-gesture-enabled');hint.textContent='雙指縮放 · 拖移看細節 · 輕點放回';}
+
+  function stopAnimation(){
+    if(animation){animation.onfinish=null;animation.cancel();animation=null;}
+  }
+  function view(){
+    var v=window.visualViewport;
+    return v?{left:v.offsetLeft,top:v.offsetTop,width:v.width,height:v.height}:
+      {left:0,top:0,width:window.innerWidth,height:window.innerHeight};
+  }
+  function fit(){
+    if(!art)return;
+    var v=view(),bounds=dialog.getBoundingClientRect();
+    var width=Math.min(Math.max(1,v.width-40),Math.max(1,v.height-88)*ratio);
+    var height=width/ratio;
+    art.style.width=width+'px';art.style.height=height+'px';
+    art.style.left=(v.left-bounds.left+(v.width-width)/2)+'px';
+    art.style.top=(v.top-bounds.top+20+(Math.max(1,v.height-88)-height)/2)+'px';
+    hint.style.left=(v.left-bounds.left)+'px';hint.style.width=v.width+'px';
+    hint.style.right='auto';hint.style.bottom='auto';hint.style.top=(v.top-bounds.top+v.height-40)+'px';
+    baseBox={left:bounds.left+parseFloat(art.style.left),top:bounds.top+parseFloat(art.style.top),width:width,height:height};
+    lastFit={width:v.width,height:v.height};
+    zoom=1;panX=0;panY=0;art.style.transform='';
+  }
+  function paintZoom(){
+    if(!art||!baseBox)return;
+    var v=view(),w=baseBox.width*zoom,h=baseBox.height*zoom;
+    panX=w<=v.width-40?v.left+(v.width-w)/2-baseBox.left:Math.max(v.left+v.width-20-baseBox.left-w,Math.min(v.left+20-baseBox.left,panX));
+    panY=h<=v.height-88?v.top+20+(v.height-88-h)/2-baseBox.top:Math.max(v.top+v.height-68-baseBox.top-h,Math.min(v.top+20-baseBox.top,panY));
+    art.style.transform='translate('+panX+'px,'+panY+'px) scale('+zoom+')';
+  }
+  function resetGesture(){
+    var points=Array.from(pointers.values());
+    if(points.length>=2){
+      var x=(points[0].x+points[1].x)/2,y=(points[0].y+points[1].y)/2;
+      gesture={kind:'pinch',distance:Math.max(1,Math.hypot(points[1].x-points[0].x,points[1].y-points[0].y)),zoom:zoom,
+        anchorX:(x-baseBox.left-panX)/zoom,anchorY:(y-baseBox.top-panY)/zoom};
+      suppressClick=true;
+    }else if(points.length){gesture={kind:'pan',x:points[0].x,y:points[0].y,panX:panX,panY:panY};}
+    else gesture=null;
+  }
+  function pointerDown(e){
+    if(!source||closing||e.pointerType==='mouse'||!baseBox)return;
+    if(!pointers.size)suppressClick=false;
+    stopAnimation();
+    pointers.set(e.pointerId,{x:e.clientX,y:e.clientY});resetGesture();
+    try{dialog.setPointerCapture(e.pointerId);}catch(error){}
+  }
+  function pointerMove(e){
+    if(!pointers.has(e.pointerId)||!gesture||!art)return;
+    pointers.set(e.pointerId,{x:e.clientX,y:e.clientY});
+    var points=Array.from(pointers.values());
+    if(gesture.kind==='pinch'&&points.length>=2){
+      var distance=Math.hypot(points[1].x-points[0].x,points[1].y-points[0].y);
+      zoom=Math.max(1,Math.min(6,gesture.zoom*distance/gesture.distance));
+      panX=(points[0].x+points[1].x)/2-baseBox.left-gesture.anchorX*zoom;
+      panY=(points[0].y+points[1].y)/2-baseBox.top-gesture.anchorY*zoom;
+      suppressClick=true;paintZoom();
+    }else if(gesture.kind==='pan'&&points.length===1){
+      var dx=points[0].x-gesture.x,dy=points[0].y-gesture.y;
+      if(Math.hypot(dx,dy)>6||suppressClick){
+        suppressClick=true;panX=gesture.panX+dx;panY=gesture.panY+dy;paintZoom();
+      }
+    }
+  }
+  function pointerEnd(e){
+    if(!pointers.has(e.pointerId))return;
+    if(e.type==='pointercancel'||e.type==='lostpointercapture')suppressClick=true;
+    pointers.delete(e.pointerId);
+    try{if(dialog.hasPointerCapture(e.pointerId))dialog.releasePointerCapture(e.pointerId);}catch(error){}
+    resetGesture();
+  }
+  function transform(rect,base){
+    return 'translate('+(rect.left-base.left)+'px,'+(rect.top-base.top)+'px) scale('+(rect.width/base.width)+','+(rect.height/base.height)+')';
+  }
+  function move(from,to,done){
+    stopAnimation();
+    if(reduce.matches||typeof art.animate!=='function'){if(done)done();return;}
+    var base=art.getBoundingClientRect();
+    if(!base.width||!base.height){if(done)done();return;}
+    animation=art.animate([{transform:transform(from,base)},{transform:transform(to,base)}],
+      {duration:closing?280:340,easing:'cubic-bezier(.2,.7,.2,1)',fill:'both'});
+    animation.onfinish=function(){stopAnimation();if(done)done();};
+  }
+  function letteringClone(svg){
+    var copy=svg.cloneNode(true),ids=new Map(),prefix='cover-zoom-'+(++serial)+'-';
+    copy.querySelectorAll('[id]').forEach(function(el){
+      var old=el.id;ids.set(old,prefix+old);el.id=prefix+old;
+    });
+    [copy].concat(Array.from(copy.querySelectorAll('*'))).forEach(function(el){
+      Array.from(el.attributes).forEach(function(attr){
+        var value=attr.value;
+        ids.forEach(function(next,old){
+          value=value.split('url(#'+old+')').join('url(#'+next+')');
+          if(value==='#'+old)value='#'+next;
+        });
+        if(value!==attr.value)el.setAttribute(attr.name,value);
+      });
+    });
+    return copy;
+  }
+  function restore(){
+    if(!source)return;
+    stopAnimation();
+    var old=source,focus=previousFocus;
+    source=null;previousFocus=null;closing=false;
+    pointers.clear();gesture=null;baseBox=null;zoom=1;panX=0;panY=0;suppressClick=false;
+    old.style.visibility=old.dataset.coverOriginalVisibility||'';
+    delete old.dataset.coverOriginalVisibility;
+    old.setAttribute('aria-expanded','false');
+    if(art){art.remove();art=null;}
+    document.documentElement.classList.remove('cover-zoom-open');
+    if(dialog.open)dialog.close();
+    if(focus&&focus.isConnected)focus.focus({preventScroll:true});
+  }
+  function close(){
+    if(!source||closing)return;
+    closing=true;
+    var from=art.getBoundingClientRect();
+    stopAnimation();
+    art.style.transform='';
+    var to=source.getBoundingClientRect();
+    if(!to.width||!to.height){restore();return;}
+    move(from,to,restore);
+  }
+  function open(el){
+    if(source)return;
+    var img=el.querySelector('img');
+    if(!img)return;
+    var origin=el.getBoundingClientRect();
+    if(!origin.width||!origin.height)return;
+    source=el;previousFocus=el;closing=false;
+    baseScale=window.visualViewport?window.visualViewport.scale||1:1;
+    source.dataset.coverOriginalVisibility=source.style.visibility;
+    ratio=img.naturalWidth&&img.naturalHeight?img.naturalWidth/img.naturalHeight:origin.width/origin.height;
+    art=document.createElement('button');art.type='button';art.className='cover-zoom-art';
+    art.setAttribute('aria-label',(img.alt||'封面')+'，點一下放回');
+    art.setAttribute('autofocus','');
+    var full=img.cloneNode(true);full.removeAttribute('id');full.loading='eager';full.draggable=false;
+    art.appendChild(full);
+    var letters=el.querySelector('.b-lettering');
+    if(letters)art.appendChild(letteringClone(letters));
+    dialog.insertBefore(art,hint);
+    try{dialog.showModal();}catch(error){restore();return;}
+    document.documentElement.classList.add('cover-zoom-open');
+    source.style.visibility='hidden';source.setAttribute('aria-expanded','true');
+    fit();var target=art.getBoundingClientRect();move(origin,target);
+    art.focus({preventScroll:true});
+    full.addEventListener('load',function(){
+      if(art&&full.parentNode===art&&!closing&&full.naturalWidth&&full.naturalHeight){
+        var loadedRatio=full.naturalWidth/full.naturalHeight;
+        if(Math.abs(loadedRatio-ratio)>.001&&!pointers.size&&zoom===1){ratio=loadedRatio;stopAnimation();fit();}
+      }
+    },{once:true});
+  }
+  sources.forEach(function(el){
+    el.setAttribute('data-cover-enlarge','');el.setAttribute('role','button');el.tabIndex=0;
+    el.setAttribute('aria-haspopup','dialog');el.setAttribute('aria-controls',dialog.id);el.setAttribute('aria-expanded','false');
+    el.setAttribute('aria-label','放大'+(el.querySelector('img').alt||'封面'));
+    el.addEventListener('click',function(e){e.preventDefault();e.stopPropagation();open(el);});
+    el.addEventListener('keydown',function(e){
+      if(e.key==='Enter'||e.key===' '){e.preventDefault();e.stopPropagation();open(el);}
+    });
+  });
+  dialog.addEventListener('click',function(e){
+    e.preventDefault();e.stopPropagation();
+    if(pointers.size||(suppressClick&&e.detail!==0))return;
+    close();
+  });
+  if(gestures){
+    dialog.addEventListener('pointerdown',pointerDown);
+    dialog.addEventListener('pointermove',pointerMove);
+    ['pointerup','pointercancel','lostpointercapture'].forEach(function(type){dialog.addEventListener(type,pointerEnd);});
+    // Safari's native page gesture must not run alongside image-only gestures.
+    ['gesturestart','gesturechange','gestureend'].forEach(function(type){
+      dialog.addEventListener(type,function(e){e.preventDefault();e.stopPropagation();},{passive:false});
+    });
+  }else{
+    // Native pinch fallback: never treat a pinch or drag as the close tap.
+    var touchStart=null;
+    dialog.addEventListener('touchstart',function(e){
+      if(e.touches.length===1){suppressClick=false;touchStart={x:e.touches[0].clientX,y:e.touches[0].clientY};}
+      else suppressClick=true;
+    },{passive:true});
+    dialog.addEventListener('touchmove',function(e){
+      if(e.touches.length>1||touchStart&&e.touches.length&&Math.hypot(e.touches[0].clientX-touchStart.x,e.touches[0].clientY-touchStart.y)>6)suppressClick=true;
+    },{passive:true});
+  }
+  dialog.addEventListener('cancel',function(e){e.preventDefault();close();});
+  dialog.addEventListener('close',function(){if(!dialog.open)restore();});
+  function resized(){
+    if(!source||pointers.size)return;
+    // Browser pinch changes the visual viewport, not the cover's layout box.
+    if(window.visualViewport&&Math.abs((window.visualViewport.scale||1)-baseScale)>.01)return;
+    if(closing){restore();return;}
+    var v=view();
+    if(lastFit&&Math.abs(v.width-lastFit.width)<1&&Math.abs(v.height-lastFit.height)<1)return;
+    if(zoom>1&&lastFit&&Math.abs(v.width-lastFit.width)<1)return;
+    stopAnimation();fit();
+  }
+  window.addEventListener('resize',resized);
+  if(window.visualViewport){
+    window.visualViewport.addEventListener('resize',resized);
+    // Do not recenter while the user pans a natively magnified viewport.
+  }
+})();
+</script>
+<div id="wl-victory-aura" aria-hidden="true"></div></body>
 </html>
