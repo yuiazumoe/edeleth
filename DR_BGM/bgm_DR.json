@@ -2,8 +2,40 @@
   "baseUrl": "//edeleth.com/DR_BGM/",
   "tracks": [
     {
-      "file": "DR00_循跡知心 Verdict of the Heart.mp3",
-      "name": "循跡知心 Verdict of the Heart (Courtroom Game)"
+      "file": "DR01.Black_Eagle_and_Ashen_Demon.mp3",
+      "name": "DR01.黑鷲與灰色惡魔"
+    },
+    {
+      "file": "DR02.Misty_Gray.mp3",
+      "name": "DR02.灰濛濛"
+    },
+    {
+      "file": "DR03.A_Kiss_for_Cover.mp3",
+      "name": "DR03.掩護之吻"
+    },
+    {
+      "file": "DR04.Jewel_Island.mp3",
+      "name": "DR04.寶石島"
+    },
+    {
+      "file": "DR05.After_the_Rain_Finale.mp3",
+      "name": "DR05.雨後：終幕"
+    },
+    {
+      "file": "DR06.Destined_Marriage.mp3",
+      "name": "DR06.命定婚姻"
+    },
+    {
+      "file": "DR07.The_Fifth_Loop.mp3",
+      "name": "DR07.第六個黎明"
+    },
+    {
+      "file": "DR08.Defy_Fate_For_the_Empire.mp3",
+      "name": "DR08.破命_為帝國而戰"
+    },
+    {
+      "file": "DR09.Defy_Fate_New_Era.mp3",
+      "name": "DR09.破命_新時代"
     }
   ]
 }
